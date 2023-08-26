@@ -58,7 +58,7 @@ model VerificationToken {
 model Note {
   id          String   @id @default(cuid())
   authorid    String
-  title       String
+  title       String   @unique
   subTitle    String
   content     String
   readingTime String?
