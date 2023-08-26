@@ -2,6 +2,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import { compare } from 'bcryptjs';
 import { randomBytes, randomUUID } from 'crypto';
+import { AuthOptions } from 'next-auth';
 import type { Adapter } from 'next-auth/adapters';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -9,7 +10,7 @@ import GitHubProvider from 'next-auth/providers/github';
 
 const prisma = new PrismaClient();
 
-export const handler = NextAuth({
+export const authOptions: AuthOptions = {
   debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: 'database',
@@ -40,10 +41,6 @@ export const handler = NextAuth({
         },
       },
       async authorize(credentials: { email: string; password: string }) {
-        console.log('TTTTTTTTTTTTTTTTTT');
-        console.log('TTTTTTTTTTTTTTTTTT');
-        console.log('TTTTTTTTTTTTTTTTTT');
-        console.log({ credentials: credentials });
         const { password, email } = credentials;
         if (!email || !password) {
           return null;
@@ -53,9 +50,6 @@ export const handler = NextAuth({
             email,
           },
         });
-        console.log('YYYYYYYYYYY');
-        console.log('YYYYYYYYYYY');
-        console.log({ user: user });
         if (!user || !compare(password, user.password)) {
           return null;
         }
@@ -78,6 +72,8 @@ export const handler = NextAuth({
       };
     },
   },
-});
+  secret: process.env.NEXTAUTH_SECRET,
+};
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
