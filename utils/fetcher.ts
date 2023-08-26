@@ -5,8 +5,6 @@ export default async function (
   req: NextApiRequest | null,
   res: NextApiResponse | null
 ) {
-  console.log('on fetcher');
-  console.log(data);
   try {
     await fetch(url, {
       method: data ? 'POST' : 'GET',
@@ -20,6 +18,10 @@ export default async function (
       body: JSON.stringify(data),
     }).then(async (res) => console.log(res));
   } catch (err) {
+    console.log('erroro');
+    console.log('erroro');
+    console.log('erroro');
+    console.log('erroro');
     console.log(err);
   }
 }

@@ -2,6 +2,7 @@
 
 import fetcher from '@/utils/fetcher';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 
 const Register = () => {
@@ -18,6 +19,7 @@ const Register = () => {
       password,
     };
     fetcher('/api/auth/register', userData);
+    redirect('/user/login');
   };
   return (
     <div>
