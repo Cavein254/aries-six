@@ -2,7 +2,6 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import { compare } from 'bcryptjs';
 import { randomBytes, randomUUID } from 'crypto';
-import { NextAuthOptions } from 'next-auth';
 import type { Adapter } from 'next-auth/adapters';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -10,7 +9,7 @@ import GitHubProvider from 'next-auth/providers/github';
 
 const prisma = new PrismaClient();
 
-export const authOptions: NextAuthOptions = {
+export const handler = NextAuth({
   debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: 'database',
@@ -78,19 +77,7 @@ export const authOptions: NextAuthOptions = {
         },
       };
     },
-    // jwt: ({ token, user }) => {
-    //   if (user) {
-    //     return {
-    //       ...token,
-    //       id: user.id,
-    //     };
-    //   }
-    // },
   },
-};
+});
 
-// const handler = NextAuth(authOptions);
-
-// export { handler as GET, handler as POST };
-
-export default NextAuth(authOptions);
+export { handler as GET, handler as POST };
