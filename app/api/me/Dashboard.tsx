@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth';
-import Nextauth from '../auth/[...nextauth]';
+import Nextauth from '../auth/[...nextauth]/route';
 
 const Dashboard = async () => {
   const session = await getServerSession(Nextauth);
