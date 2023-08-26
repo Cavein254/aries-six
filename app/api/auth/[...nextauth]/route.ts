@@ -1,7 +1,6 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import { compare } from 'bcryptjs';
-import { randomBytes, randomUUID } from 'crypto';
 import { AuthOptions } from 'next-auth';
 import type { Adapter } from 'next-auth/adapters';
 import NextAuth from 'next-auth/next';
@@ -13,12 +12,12 @@ const prisma = new PrismaClient();
 export const authOptions: AuthOptions = {
   debug: process.env.NODE_ENV === 'development',
   session: {
-    strategy: 'database',
-    maxAge: 2 * 30 * 24 * 60 * 60, // 60 days
-    updateAge: 14 * 24 * 60 * 60, // 14 days
-    generateSessionToken: () => {
-      return randomUUID?.() ?? randomBytes(32).toString('hex');
-    },
+    strategy: 'jwt',
+    // maxAge: 2 * 30 * 24 * 60 * 60, // 60 days
+    // updateAge: 14 * 24 * 60 * 60, // 14 days
+    // generateSessionToken: () => {
+    //   return randomUUID?.() ?? randomBytes(32).toString('hex');
+    // },
   },
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
@@ -69,6 +68,11 @@ export const authOptions: AuthOptions = {
           ...session.user,
           id: token.id,
         },
+      };
+    },
+    jwt: ({ token, user }) => {
+      return {
+        user,
       };
     },
   },

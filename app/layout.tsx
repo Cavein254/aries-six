@@ -1,3 +1,4 @@
+import Provider from '@/components/Provider';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -15,8 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <h1>5 oclock in the morning</h1>
-      <body className={inter.className}>{children}</body>
+      <Provider>
+        <body>
+          <h1>5 oclock in the morning</h1>x{children}
+        </body>
+      </Provider>
     </html>
   );
 }
