@@ -24,7 +24,7 @@ const Register = () => {
     try {
       await signup(userData);
     } catch (err) {
-      console.log({ 'Registration Error': err });
+      console.log(err);
     }
   };
   console.log({ Success: isSuccess });
@@ -35,7 +35,7 @@ const Register = () => {
   return (
     <div>
       <form onSubmit={handleRegister}>
-        <div>{error && <h1>{JSON.stringify(error)}</h1>}</div>
+        <div>{error && <h1>{JSON.stringify(error.data)}</h1>}</div>
         <div>
           <div>
             <label>Name:</label>
