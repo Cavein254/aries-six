@@ -1,7 +1,24 @@
 'use client';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+
+type Note = {
+  authorid: string;
+  title: string;
+  subTitle: string;
+  content: string;
+  tags: string[];
+};
+const initialState = {
+  authorid: '',
+  title: '',
+  subTitle: '',
+  content: '',
+  tags: [],
+};
 export default function Page() {
   const { data: session, status } = useSession();
+  const [note, useNote] = useState<Note>(initialState);
   console.log(session);
   console.log({ status: status });
 
@@ -9,7 +26,7 @@ export default function Page() {
     <div>
       {status === 'authenticated' ? (
         <>
-          <h1>{session?.user?.email}</h1>
+          <div>{error && <h1>{JSON.stringify(error.data)}</h1>}</div>
           <div>
             <label>Title</label>
             <input type="text" placeholder="Enter title" />
