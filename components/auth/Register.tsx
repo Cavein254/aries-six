@@ -2,6 +2,7 @@
 
 import { useSignupMutation } from '@/redux/api/services/userApi';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 
 type UserData = {
@@ -27,11 +28,9 @@ const Register = () => {
       console.log(err);
     }
   };
-  console.log({ Success: isSuccess });
-  console.log({ loading: isLoading });
-  console.log({ erroris: isError });
-  console.log({ error: error });
-  console.log({ data: data });
+  if (isSuccess === true) {
+    redirect('/dashboard');
+  }
   return (
     <div>
       <form onSubmit={handleRegister}>
