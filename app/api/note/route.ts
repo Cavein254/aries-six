@@ -41,3 +41,18 @@ export async function PUT(request: Request) {
     return NextResponse.json(err);
   }
 }
+
+export async function DELETE(request: Request) {
+  const res = await request.json();
+  const { id } = res;
+  try {
+    const post = await prisma.note.delete({
+      where: {
+        id,
+      },
+    });
+    return NextResponse.json(post);
+  } catch (err) {
+    return NextResponse.json(err);
+  }
+}

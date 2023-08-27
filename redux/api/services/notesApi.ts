@@ -14,6 +14,9 @@ export const notesApi = createApi({
     baseUrl: process.env.NEXTAUTH_URL,
   }),
   endpoints: (builder) => ({
+    getNotes: builder.query<Note[], null>({
+      query: () => '/api/note',
+    }),
     createNote: builder.mutation({
       query: (noteData: Note) => ({
         url: '/api/note',
@@ -24,4 +27,4 @@ export const notesApi = createApi({
   }),
 });
 
-export const { useCreateNoteMutation } = notesApi;
+export const { useCreateNoteMutation, useGetNotesQuery } = notesApi;

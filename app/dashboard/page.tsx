@@ -1,5 +1,8 @@
+'use client';
+import { useGetNotesQuery } from '@/redux/api/services/notesApi';
 const dashboard = () => {
-  return <div>dashboard</div>;
+  const { data, isLoading, isError } = useGetNotesQuery(null);
+  return <div>{JSON.stringify(data)}</div>;
 };
 
 export default dashboard;
