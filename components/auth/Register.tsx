@@ -29,7 +29,7 @@ const Register = () => {
     }
   };
   if (isSuccess === true) {
-    redirect('/dashboard');
+    redirect('/user/login');
   }
   return (
     <div>
