@@ -16,10 +16,8 @@ const initialState = {
   password: '',
 };
 const Register = () => {
-  // const router = useRouter();
   const [userData, setUserData] = useState<UserData>(initialState);
-  const [signup, { isError, isLoading, isSuccess, error, data }] =
-    useSignupMutation();
+  const [signup, { isLoading, isSuccess, error }] = useSignupMutation();
   const handleRegister = async (e) => {
     e.preventDefault();
     try {

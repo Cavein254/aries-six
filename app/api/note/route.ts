@@ -7,7 +7,7 @@ export async function GET(request: Request) {
 }
 export async function POST(request: Request) {
   const res = await request.json();
-  const { authorid, title, subTitle, content, tags } = res;
+  const { authorid, title, subTitle, content } = res;
   try {
     const post = await prisma.note.create({
       data: {
@@ -15,9 +15,28 @@ export async function POST(request: Request) {
         title,
         subTitle,
         content,
-        tags,
       },
     });
+    return NextResponse.json(post);
+  } catch (err) {
+    return NextResponse.json(err);
+  }
+}
+export async function PUT(request: Request) {
+  const res = await request.json();
+  const { id, title, subTitle, content } = res;
+  try {
+    const post = await prisma.note.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        subTitle,
+        content,
+      },
+    });
+    return NextResponse.json(post);
   } catch (err) {
     return NextResponse.json(err);
   }
