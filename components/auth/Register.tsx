@@ -1,8 +1,7 @@
 'use client';
 
-import fetcher from '@/utils/fetcher';
+import { useSignupMutation } from '@/redux/api/services/userApi';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { useState } from 'react';
 
 const Register = () => {
@@ -10,23 +9,27 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const handleRegister = (e) => {
+  const [signup, { isError, isLoading, isSuccess }] = useSignupMutation();
+  const handleRegister = async (e) => {
     e.preventDefault();
     const userData = {
       name,
       email,
       password,
     };
-    fetcher('/api/auth/register', userData);
-    redirect('/user/login');
+    try {
+      await signup(userData);
+    } catch (err) {
+      console.log({ 'Registration Error': err });
+    }
   };
+  console.log({ Success: isSuccess });
+  console.log({ loading: isLoading });
+  console.log({ erroris: isError });
   return (
     <div>
       <form onSubmit={handleRegister}>
-        <div>
-          <pre>{error}</pre>
-        </div>
+        <div></div>
         <div>
           <div>
             <label>Name:</label>
@@ -53,7 +56,9 @@ const Register = () => {
             />
           </div>
           <div>
-            <button type="submit">Register</button>
+            <button type="submit" disabled={isLoading}>
+              Register
+            </button>
           </div>
         </div>
         <div>
