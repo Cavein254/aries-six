@@ -16,7 +16,13 @@ export async function POST(request: Request) {
         password: hash,
       },
     });
-    return NextResponse.json(user);
+    const newUser = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      image: user.image,
+    };
+    return NextResponse.json(newUser, { status: 201 });
   } catch (err) {
     if (err.code === 'P2002') {
       return NextResponse.json(
